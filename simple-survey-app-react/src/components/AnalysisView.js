@@ -30,18 +30,14 @@ function AnalysisView() {
 			}
 		});
 		let tmp = [];
-		completedSurveys.forEach((e) => {
+		completedSurveys.forEach((e) => {			
 			if (tmp.length < 1) {
-				tmp.push(e);
-			} else {
-				let bAdd = false;
-				for (let i = 0; i < tmp.length; i++) {
-					if (tmp[i].surveyid !== e.surveyid) {
-						bAdd = true;
-						break;
-					}
-				}
-				if (bAdd) {
+				tmp.push(e);				
+			} else {				
+				let idx = tmp.findIndex((survey) => {					
+					return survey.surveyid === e.surveyid;
+				}); 
+				if (idx < 0) {
 					tmp.push(e);
 				}				
 			}

@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import SurveyListView from './SurveyListView';
 import NewSurvey from './NewSurvey';
 import AnalysisView from './AnalysisView';
+import CompletedSurveys from './CompletedSurveys';
 import {  
   Switch,
   Route,
@@ -68,6 +69,7 @@ function Dashboard() {
 					<Link to={`${url}/viewsurvey`} className="mr-3">View Survey</Link>
 					{currentUser && currentUser.role === 1 && <Link to={`${url}/createsurvey`} className="mr-3">Create New Survey</Link>}
 					{currentUser && currentUser.role !== 3 && <Link to={`${url}/viewanalysis`} className="mr-3">View Analysis</Link>}
+					{currentUser && currentUser.role === 3 && <Link to={`${url}/completedsurvey`} className="mr-3">View Completed Survey</Link>}
 				</Nav>
 			</Navbar>	
 			<hr />	
@@ -81,6 +83,9 @@ function Dashboard() {
 				</Route>
 				<Route path={`${path}/viewanalysis`}>
 					<AnalysisView></AnalysisView>
+				</Route>
+				<Route path={`${path}/completedsurvey`}>
+					<CompletedSurveys></CompletedSurveys>
 				</Route>
 			</Switch>
 			</div>
