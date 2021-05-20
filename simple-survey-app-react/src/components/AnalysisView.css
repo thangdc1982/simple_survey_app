@@ -1,0 +1,8 @@
+.analysisHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: 800;
+    color: green;
+}
