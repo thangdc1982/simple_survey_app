@@ -4,6 +4,9 @@ import QuestionCompleted from './QuestionCompleted';
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { auth } from "../firebase";
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
+import Button from 'react-bootstrap/Button';
 
 function CompletedSurveys() {
 	const history = useHistory();
@@ -68,6 +71,17 @@ function CompletedSurveys() {
 			}
 		}
 	};
+
+	const printDocument = () => {
+		const input = document.getElementById('divToPrint');
+		html2canvas(input)
+			.then((canvas) => {				
+				const imgData = canvas.toDataURL('image/png');
+				const pdf = new jsPDF("p", "mm", "a4");
+				pdf.addImage(imgData, 'JPEG', 0, 0, 180, 150);
+				pdf.save(`${currentSurvey.description}.pdf`);
+			})
+	};
 	
 	return (
 		currentUser && completedSurveyOption ? (<div>
@@ -82,6 +96,7 @@ function CompletedSurveys() {
 					}					
 				</select>)}				
 			</div>
+			<div id="divToPrint">
 			{selected !== 0 && currentSurvey && currentQuestions && (<div>
 			<fieldset className="scheduler-border">
 					<legend className="scheduler-border">Survey Description:</legend>
@@ -106,8 +121,10 @@ function CompletedSurveys() {
 							return (<div key={i}><QuestionCompleted response={e} answers={answer}></QuestionCompleted><hr /></div>)
 						})
 					}										
-			</fieldset>
-			</div>)}			
+			</fieldset>			
+			</div>)}	
+			</div>
+			{selected !== 0 && <Button onClick={printDocument}>SAVE TO PDF</Button>}
 		</div>) : <></>
 	)
 }

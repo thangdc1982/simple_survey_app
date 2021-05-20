@@ -93,6 +93,7 @@ function SurveyListView() {
 						setSelected(0);
 						setCurrentSurvey(null);	
 						setCurrrentQuestions([]);
+						history.push("/dashboard/completedsurvey");
 					})
 					.catch(err => console.log(err.message));
 			} catch (error) {
